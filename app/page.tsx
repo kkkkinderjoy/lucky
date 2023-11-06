@@ -111,7 +111,7 @@ export default function Home() {
       <h2 className='text-xl font-bold mb-[1rem]'>{resultToday.title}</h2>
       <p className='mb-[1rem]'>오늘 날짜: {resultToday.date}</p>
       {resultToday.content.map((item, idx) => (
-        <div key={idx}>
+        <div key={idx} className='border mb-[1rem] rounded-md p-4'>
           <h3 className='font-bold text-lg mb-[0.5rem]'>{item.name}</h3>
           <p className='mb-[1rem]'>{item.desc}</p>
         </div>
