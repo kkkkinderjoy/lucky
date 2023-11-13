@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image';
 import React,{useState, useEffect} from 'react';
 
 interface contentInter {
@@ -23,8 +24,18 @@ export default function Home() {
   const[resultToday,setResultToday] = useState<today | null>(null);
   const[resultTomorrow,setResultTomorrow] = useState(null);
   const[resultMonth,setResultMonth] = useState(null);
-
+  //오늘 날짜 출력하기
+  const date = new Date();
+  const dateYear = date.getFullYear();
+  const dateMonth = date.getMonth() + 1;
+  const dateDay = date.getDate();
+  const dateTomorrow = date.getDate() + 1;
   
+  const dateString = dateYear + '.' + dateMonth + '.' + dateDay;
+  const Tomorrow = dateYear + '.' + dateMonth + '.' + dateTomorrow;
+  // console.log(dateString);
+
+
     const fetchData = async() =>{
       const res = await fetch (`/api?gender=${gender}&birthdate=${birthDate}&month=${month}&time=${time}`);
       //데이터를 한번 숨기기 위해서 api로 데이터를 넘기 위해 (masking) >  보안적문제를 해결함 (클라이언트에서 정보수정 불가능하게 함 : 백엔드에서 데이터를 관리하니깐)
@@ -48,26 +59,27 @@ export default function Home() {
   return (
     <>
     <div className="w-full h-full bg-white">
-    <h3 className='text-center text-3xl font-bold p-2 w-full h-30 lg:h-50 bg-[#8B5CF6]'>오늘의 운세</h3>
+    <h3 className='text-3xl md:text-4xl font-extrabold p-2 w-full h-[100px] lg:h-50 bg-[#8B5CF6] flex items-center justify-center'>운세</h3>
       <div className="max-w-7xl mx-auto p-[3rem]">
+        <div className="flex justify-center w-full mb-[2rem]" ><img src="/images/main_rounded.svg" alt="lucky_main"  className='w-1/2 lg:w-1/3 border-gray-300 border-[2px] rounded-full' /></div>
         <div className="mb-[2rem]">
           <p className="text-xl font-bold">개인정보입력</p>
-          <span className="text-gray-400">정확한 분석을 위해 실제 생일정보를 입력해주세요</span><br />
-          <p className="text-gray-400">※본 운세는 <span className='text-[#8B5CF6]'>무료 서비스</span>입니다</p>
+          <span className="text-gray-400 font-medium">정확한 분석을 위해 실제 생일정보를 입력해주세요</span><br />
+          <p className="text-gray-400 font-medium">※본 운세는 <span className='text-[#8B5CF6]'>무료 서비스</span>입니다</p>
         </div>
-      <div className="mb-[1rem]">
-        <ul className="flex">
-          <li className="flex items-center"><span className='font-bold'>성별 </span></li>
-          <li className="ml-2 "><button onClick={()=>setGender('m')} className={`border rounded-[0.25rem] p-[0.5rem] ${gender === 'm' && 'bg-[#8B5CF6]'}`}>남자</button></li>
-          <li className="ml-2"><button onClick={()=>setGender('f')} className={`border rounded-[0.25rem] p-[0.5rem] ${gender === 'f' && 'bg-[#8B5CF6]'}`}>여자</button></li>
+      <div className="mb-[2rem]">
+      <span className='font-bold'>성별</span>
+        <ul className="flex gap-2 mt-2">
+          <li className=""><button onClick={()=>setGender('m')} className={`border-[#ccc] border-[1px] rounded-[0.25rem] p-[0.5rem] hover: ${gender === 'm' && 'bg-[#8B5CF6] text-white'}`}>남자</button></li>
+          <li className=""><button onClick={()=>setGender('f')} className={`border-[#ccc] border-[1px] rounded-[0.25rem] p-[0.5rem] ${gender === 'f' && 'bg-[#8B5CF6] text-white'}`}>여자</button></li>
         </ul>
       </div>
-      <div className="flex items-center mb-[1rem]">
-        <ul className="flex">
-          <li className="flex items-center"><span className='font-bold'>생년월일</span></li>
-          <li className="ml-3"><input type="text" onChange={birthChange} value={birthDate} placeholder='생년월일(8자리)' className='outline-none text-center border-[1px] rounded-[0.25rem] p-[0.5rem]'/></li>
+      <div className="mb-[2rem]">
+      <span className='font-bold'>생년월일</span>
+        <ul className="flex gap-2 mt-2">
+          <li className=""><input type="text" onChange={birthChange} value={birthDate} placeholder='생년월일(8자리)' className='outline-none text-center border-[#ccc] border-[1px] rounded-[0.25rem] p-[0.5rem]'/></li>
           <li className="">
-            <select value={month} onChange={(e)=>setMonth(e.target.value)} className='ml-2 text-center border-[1px] rounded-[0.25rem] p-[0.5rem]'>
+            <select value={month} onChange={(e)=>setMonth(e.target.value)} className='ml-2 text-center border-[#ccc] border-[1px] rounded-[0.25rem] p-[0.5rem]'>
               <option value="1">양력</option>
               <option value="2">음력 평달</option>
               <option value="3">음력 윤달</option>
@@ -75,11 +87,11 @@ export default function Home() {
           </li>
         </ul>
       </div>
-      <div className="flex items-center mb-[1rem]">
-        <ul className="flex">
-          <li className="font-bold flex items-center"><span className=''>태어난 시간</span></li>
+      <div className="">
+      <span className='font-bold'>태어난 시간</span>
+        <ul className="flex mt-2">
           <li className="">
-          <select value={time} onChange={(e)=>setTime(e.target.value)} className='ml-5 text-center border-[1px] rounded-[0.25rem] p-[0.5rem]'>
+          <select value={time} onChange={(e)=>setTime(e.target.value)} className='border-[#ccc] border-[1px] text-center rounded-[0.25rem] p-[0.5rem]'>
             <option value="">모름</option>
             <option value="0">23:30 ~ 01:29</option>
             <option value="1">01:30 ~ 03:29</option>
@@ -98,7 +110,7 @@ export default function Home() {
         </ul>
       </div>
       <div className="flex justify-center mt-[2rem]">
-      <button className='border-none mb-[1rem] p-[0.5rem_2rem] cursor-pointer rounded-[0.25rem] text-center bg-[#8B5CF6]' onClick={fetchData}>운세보기</button>
+      <button className='w-full md:w-1/2 lg:w-1/3 font-semibold border-none mb-[1rem] p-[0.5rem_2rem] cursor-pointer rounded-[0.25rem] text-center bg-[#8B5CF6] text-white' onClick={fetchData}>운세보기</button>
       </div>
       {/* <div className="max-w-full h-full">
         <p className=''>성별 : {gender}</p>
@@ -110,6 +122,7 @@ export default function Home() {
       <>
       <h2 className='text-xl font-bold mb-[1rem]'>{resultToday.title}</h2>
       <p className='mb-[1rem]'>오늘 날짜: {resultToday.date}</p>
+      <p className=""></p>
       {resultToday.content.map((item, idx) => (
         <div key={idx} className='border mb-[1rem] rounded-md p-4'>
           <h3 className='font-bold text-lg mb-[0.5rem]'>{item.name}</h3>
