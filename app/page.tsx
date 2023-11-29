@@ -59,9 +59,9 @@ export default function Home() {
   return (
     <>
     <div className="w-full h-full bg-white">
-    <h3 className='text-3xl md:text-4xl font-extrabold p-2 w-full h-[100px] lg:h-50 bg-[#8B5CF6] flex items-center justify-center'>운세</h3>
+    <h3 className='text-3xl md:text-4xl font-extrabold p-2 w-full h-[100px] lg:h-50 bg-[#8B5CF6] flex items-center justify-center text-white'>운세</h3>
       <div className="max-w-7xl mx-auto p-[3rem]">
-        <div className="flex justify-center w-full mb-[2rem]" ><img src="/images/main_rounded.svg" alt="lucky_main"  className='w-1/2 lg:w-1/3 border-gray-300 border-[2px] rounded-full' /></div>
+        <div className="flex justify-center w-full mb-[2rem]" ><Image width={100} height={100} src="/images/lucky_circle.svg" alt="lucky_main"  className='w-1/2 lg:w-1/3 border-gray-300 border-[2px] rounded-full' /></div>
         <div className="mb-[2rem]">
           <p className="text-xl font-bold">개인정보입력</p>
           <span className="text-gray-400 font-medium">정확한 분석을 위해 실제 생일정보를 입력해주세요</span><br />
